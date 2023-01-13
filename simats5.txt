@@ -1,0 +1,99 @@
+mysql> use simats;
+Database changed
+mysql> show tables;
++------------------+
+| Tables_in_simats |
++------------------+
+| employee         |
+| mentees          |
+| student          |
+| studepartment    |
++------------------+
+4 rows in set (0.01 sec)
+
+mysql> alter table mentees add subject varchar(20);
+Query OK, 3 rows affected (0.03 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> update mentees set subject="PDSD"where dept="ECE";
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update mentees set subject="BIOEVS"where dept="CSE";
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update mentees set subject="BIOEVES" where dept="BME";
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> select*from mentees;
++-----------+----------+------+---------+------------+-------+---------+
+| regno     | name     | dept | address | fathername | marks | subject |
++-----------+----------+------+---------+------------+-------+---------+
+| 192225012 | lakshmi  | CSE  | guntur  | krishna    |    99 | BIOEVS  |
+| 192225013 | sriya    | ECE  | nellore | kantha rao |    91 | PDSD    |
+| 192225015 | thanusri | EEE  | madurai | ramesh     |    91 | NULL    |
++-----------+----------+------+---------+------------+-------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select*from mentees where marks BETWEEN 90 and 99;
++-----------+----------+------+---------+------------+-------+---------+
+| regno     | name     | dept | address | fathername | marks | subject |
++-----------+----------+------+---------+------------+-------+---------+
+| 192225012 | lakshmi  | CSE  | guntur  | krishna    |    99 | BIOEVS  |
+| 192225013 | sriya    | ECE  | nellore | kantha rao |    91 | PDSD    |
+| 192225015 | thanusri | EEE  | madurai | ramesh     |    91 | NULL    |
++-----------+----------+------+---------+------------+-------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select*from mentees where subject IN('BIOEVS');
++-----------+---------+------+---------+------------+-------+---------+
+| regno     | name    | dept | address | fathername | marks | subject |
++-----------+---------+------+---------+------------+-------+---------+
+| 192225012 | lakshmi | CSE  | guntur  | krishna    |    99 | BIOEVS  |
++-----------+---------+------+---------+------------+-------+---------+
+1 row in set (0.00 sec)
+
+mysql> select*from mentees where marks NOT BETWEEN 95 and 99;
++-----------+----------+------+---------+------------+-------+---------+
+| regno     | name     | dept | address | fathername | marks | subject |
++-----------+----------+------+---------+------------+-------+---------+
+| 192225013 | sriya    | ECE  | nellore | kantha rao |    91 | PDSD    |
+| 192225015 | thanusri | EEE  | madurai | ramesh     |    91 | NULL    |
++-----------+----------+------+---------+------------+-------+---------+
+2 rows in set (0.00 sec)
+
+mysql> select sum(marks) from mentees where dept="ECE";
++------------+
+| sum(marks) |
++------------+
+|         91 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select avg(marks) as average from mentees;
++---------+
+| average |
++---------+
+| 93.6667 |
++---------+
+1 row in set (0.00 sec)
+
+mysql> select min(marks) as minimum from mentees;
++---------+
+| minimum |
++---------+
+|      91 |
++---------+
+1 row in set (0.00 sec)
+
+mysql> select max(marks) as maximum from mentees;
++---------+
+| maximum |
++---------+
+|      99 |
++---------+
+1 row in set (0.00 sec)
+
+mysql> +

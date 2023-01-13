@@ -1,0 +1,122 @@
+mysql> use simats;
+Database changed
+mysql> show tables;
++------------------+
+| Tables_in_simats |
++------------------+
+| employee         |
+| mentees          |
+| student          |
+| studepartment    |
++------------------+
+4 rows in set (0.00 sec)
+
+mysql> select*from mentees;
++-----------+----------+------+---------+------------+-------+---------+
+| regno     | name     | dept | address | fathername | marks | subject |
++-----------+----------+------+---------+------------+-------+---------+
+| 192225012 | lakshmi  | CSE  | guntur  | krishna    |    99 | BIOEVS  |
+| 192225013 | sriya    | ECE  | nellore | kantha rao |    91 | PDSD    |
+| 192225015 | thanusri | EEE  | madurai | ramesh     |    91 | NULL    |
++-----------+----------+------+---------+------------+-------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select*from order by name;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order by name' at line 1
+mysql> select*from mentees order by name;
++-----------+----------+------+---------+------------+-------+---------+
+| regno     | name     | dept | address | fathername | marks | subject |
++-----------+----------+------+---------+------------+-------+---------+
+| 192225012 | lakshmi  | CSE  | guntur  | krishna    |    99 | BIOEVS  |
+| 192225013 | sriya    | ECE  | nellore | kantha rao |    91 | PDSD    |
+| 192225015 | thanusri | EEE  | madurai | ramesh     |    91 | NULL    |
++-----------+----------+------+---------+------------+-------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select*from mentees group by marks;
++-----------+---------+------+---------+------------+-------+---------+
+| regno     | name    | dept | address | fathername | marks | subject |
++-----------+---------+------+---------+------------+-------+---------+
+| 192225013 | sriya   | ECE  | nellore | kantha rao |    91 | PDSD    |
+| 192225012 | lakshmi | CSE  | guntur  | krishna    |    99 | BIOEVS  |
++-----------+---------+------+---------+------------+-------+---------+
+2 rows in set (0.00 sec)
+
+mysql> select*from mentees group by dept;
++-----------+----------+------+---------+------------+-------+---------+
+| regno     | name     | dept | address | fathername | marks | subject |
++-----------+----------+------+---------+------------+-------+---------+
+| 192225012 | lakshmi  | CSE  | guntur  | krishna    |    99 | BIOEVS  |
+| 192225013 | sriya    | ECE  | nellore | kantha rao |    91 | PDSD    |
+| 192225015 | thanusri | EEE  | madurai | ramesh     |    91 | NULL    |
++-----------+----------+------+---------+------------+-------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select*from mentees having marks>95;
++-----------+---------+------+---------+------------+-------+---------+
+| regno     | name    | dept | address | fathername | marks | subject |
++-----------+---------+------+---------+------------+-------+---------+
+| 192225012 | lakshmi | CSE  | guntur  | krishna    |    99 | BIOEVS  |
++-----------+---------+------+---------+------------+-------+---------+
+1 row in set (0.00 sec)
+
+mysql> use simats;
+Database changed
+mysql> show tables;
++------------------+
+| Tables_in_simats |
++------------------+
+| employee         |
+| mentees          |
+| student          |
+| studepartment    |
++------------------+
+4 rows in set (0.00 sec)
+
+mysql> select*from mentees;
++-----------+----------+------+---------+------------+-------+---------+
+| regno     | name     | dept | address | fathername | marks | subject |
++-----------+----------+------+---------+------------+-------+---------+
+| 192225012 | lakshmi  | CSE  | guntur  | krishna    |    99 | BIOEVS  |
+| 192225013 | sriya    | ECE  | nellore | kantha rao |    91 | PDSD    |
+| 192225015 | thanusri | EEE  | madurai | ramesh     |    91 | NULL    |
++-----------+----------+------+---------+------------+-------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select regno,name from mentees where name in(select name from mentees where dept="ECE
+");
++-----------+-------+
+| regno     | name  |
++-----------+-------+
+| 192225013 | sriya |
++-----------+-------+
+1 row in set (0.00 sec)
+
+mysql> create table mentees1(id int(10),name varchar(20));
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> insert into mentees1(id,name)
+    -> select regno,name
+    -> from mentees where dept="ECE";
+Query OK, 1 row affected (0.00 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+mysql> select*from mentees1;
++-----------+-------+
+| id        | name  |
++-----------+-------+
+| 192225013 | sriya |
++-----------+-------+
+1 row in set (0.00 sec)
+
+mysql> select regno,(select name from mentees1 where id=192225015)as name.dept,address,fathername,marks,subject from mentees where regno=192225015;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '.dept,address,fathername,marks,subject from mentees where regno=192225015' at line 1
+mysql> select regno,(select name from mentees1 where id=192225013)as name,dept,address,fathername,marks,subject from mentees where regno=192225013;
++-----------+-------+------+---------+------------+-------+---------+
+| regno     | name  | dept | address | fathername | marks | subject |
++-----------+-------+------+---------+------------+-------+---------+
+| 192225013 | sriya | ECE  | nellore | kantha rao |    91 | PDSD    |
++-----------+-------+------+---------+------------+-------+---------+
+1 row in set (0.00 sec)
+
+mysql>

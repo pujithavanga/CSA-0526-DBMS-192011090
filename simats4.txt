@@ -1,0 +1,97 @@
+mysql> use simats;
+Database changed
+mysql> show tables;
++------------------+
+| Tables_in_simats |
++------------------+
+| employee         |
+| mentees          |
+| student          |
+| studepartment    |
++------------------+
+4 rows in set (0.02 sec)
+
+mysql> select*from mentees;
++-----------+----------+------+---------+------------+
+| regno     | name     | dept | address | fathername |
++-----------+----------+------+---------+------------+
+| 192225012 | lakshmi  | CSE  | guntur  | krishna    |
+| 192225013 | sriya    | ECE  | nellore | kantha rao |
+| 192225015 | thanusri | EEE  | madurai | ramesh     |
++-----------+----------+------+---------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select*from mentees where dept='ECE';
++-----------+-------+------+---------+------------+
+| regno     | name  | dept | address | fathername |
++-----------+-------+------+---------+------------+
+| 192225013 | sriya | ECE  | nellore | kantha rao |
++-----------+-------+------+---------+------------+
+1 row in set (0.00 sec)
+
+mysql> select*from mentees where name="thanusri";
++-----------+----------+------+---------+------------+
+| regno     | name     | dept | address | fathername |
++-----------+----------+------+---------+------------+
+| 192225015 | thanusri | EEE  | madurai | ramesh     |
++-----------+----------+------+---------+------------+
+1 row in set (0.00 sec)
+
+mysql> alter table mentees add marks int(3);
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> update mentees set marks=99 where dept="CSE";
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update mentees set marks=91 where dept="EEE";
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update mentees set marks=91 where name="sriya";
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update mentees set marks=90 where name="harshi";
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> select*from mentees;
++-----------+----------+------+---------+------------+-------+
+| regno     | name     | dept | address | fathername | marks |
++-----------+----------+------+---------+------------+-------+
+| 192225012 | lakshmi  | CSE  | guntur  | krishna    |    99 |
+| 192225013 | sriya    | ECE  | nellore | kantha rao |    91 |
+| 192225015 | thanusri | EEE  | madurai | ramesh     |    91 |
++-----------+----------+------+---------+------------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select*from mentees where name like 'G%';
+Empty set (0.00 sec)
+
+mysql> select*from mentees where name like"s%";
++-----------+-------+------+---------+------------+-------+
+| regno     | name  | dept | address | fathername | marks |
++-----------+-------+------+---------+------------+-------+
+| 192225013 | sriya | ECE  | nellore | kantha rao |    91 |
++-----------+-------+------+---------+------------+-------+
+1 row in set (0.00 sec)
+
+mysql> select*from mentees where name like "t%";
++-----------+----------+------+---------+------------+-------+
+| regno     | name     | dept | address | fathername | marks |
++-----------+----------+------+---------+------------+-------+
+| 192225015 | thanusri | EEE  | madurai | ramesh     |    91 |
++-----------+----------+------+---------+------------+-------+
+1 row in set (0.00 sec)
+
+mysql> select*from mentees where address like "g__t__";
++-----------+---------+------+---------+------------+-------+
+| regno     | name    | dept | address | fathername | marks |
++-----------+---------+------+---------+------------+-------+
+| 192225012 | lakshmi | CSE  | guntur  | krishna    |    99 |
++-----------+---------+------+---------+------------+-------+
+1 row in set (0.00 sec)
+
+mysql>

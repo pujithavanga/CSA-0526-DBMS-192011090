@@ -1,0 +1,126 @@
+
+mysql> create database simats;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> use simats;
+Database changed
+mysql> create table faculty(facid int(20),facname varchar(20),facdept varchar(10),salary int(20));
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> desc faculty;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| facid   | int(20)     | YES  |     | NULL    |       |
+| facname | varchar(20) | YES  |     | NULL    |       |
+| facdept | varchar(10) | YES  |     | NULL    |       |
+| salary  | int(20)     | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> create table student(stdid int(10),stdname varchar(20),stdage int(10),stdcountry varchar(20),stdaddress varchar(20));
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> desc student;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| stdid      | int(10)     | YES  |     | NULL    |       |
+| stdname    | varchar(20) | YES  |     | NULL    |       |
+| stdage     | int(10)     | YES  |     | NULL    |       |
+| stdcountry | varchar(20) | YES  |     | NULL    |       |
+| stdaddress | varchar(20) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> create table studepartment(deptid int(10),deptname varchar(20),rollno int(10));
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> desc studepartment;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| deptid   | int(10)     | YES  |     | NULL    |       |
+| deptname | varchar(20) | YES  |     | NULL    |       |
+| rollno   | int(10)     | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> create table employee(empid int(10),empname varchar(20),salary int(10),empaddress varchar(20));
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> desc employee;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| empid      | int(10)     | YES  |     | NULL    |       |
+| empname    | varchar(20) | YES  |     | NULL    |       |
+| salary     | int(10)     | YES  |     | NULL    |       |
+| empaddress | varchar(20) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> insert into faculty values(1,"goutham","CSE",100000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into faculty values(2,"deepu","ECE",150000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into faculty values(3,"ammu","BME",120000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into faculty value(4,"chintu","IT",110000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select*from faculty;
++-------+---------+---------+--------+
+| facid | facname | facdept | salary |
++-------+---------+---------+--------+
+|     1 | goutham | CSE     | 100000 |
+|     2 | deepu   | ECE     | 150000 |
+|     3 | ammu    | BME     | 120000 |
+|     4 | chintu  | IT      | 110000 |
++-------+---------+---------+--------+
+4 rows in set (0.00 sec)
+
+mysql> show tables;
++------------------+
+| Tables_in_simats |
++------------------+
+| employee         |
+| faculty          |
+| student          |
+| studepartment    |
++------------------+
+4 rows in set (0.00 sec)
+
+mysql> drop table faculty;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> show tables;
++------------------+
+| Tables_in_simats |
++------------------+
+| employee         |
+| student          |
+| studepartment    |
++------------------+
+3 rows in set (0.00 sec)
+
+mysql> alter table employee add address varchar(15);
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc employee;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| empid      | int(10)     | YES  |     | NULL    |       |
+| empname    | varchar(20) | YES  |     | NULL    |       |
+| salary     | int(10)     | YES  |     | NULL    |       |
+| empaddress | varchar(20) | YES  |     | NULL    |       |
+| address    | varchar(15) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+5 rows in set (0.02 sec)
+
+mysql>

@@ -1,0 +1,122 @@
+mysql> select*from mentees;
+ERROR 1046 (3D000): No database selected
+mysql> use simats;
+Database changed
+mysql> show tables;
++------------------+
+| Tables_in_simats |
++------------------+
+| employee         |
+| mentees          |
+| mentees1         |
+| student          |
+| studepartment    |
++------------------+
+5 rows in set (0.00 sec)
+
+mysql> select*from metees;
+ERROR 1146 (42S02): Table 'simats.metees' doesn't exist
+mysql> select*from mentees;
++-----------+----------+------+---------+------------+-------+---------+
+| regno     | name     | dept | address | fathername | marks | subject |
++-----------+----------+------+---------+------------+-------+---------+
+| 192225012 | lakshmi  | CSE  | guntur  | krishna    |    99 | BIOEVS  |
+| 192225013 | sriya    | ECE  | nellore | kantha rao |    91 | PDSD    |
+| 192225015 | thanusri | EEE  | madurai | ramesh     |    91 | NULL    |
++-----------+----------+------+---------+------------+-------+---------+
+3 rows in set (0.00 sec)
+
+mysql> create table mdept(deptid int(5),deptname varchar(20),rollno int(10));
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> insert into mdept values(1,"CSE",192225012);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into mdept values(2,"ECE",192225013);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> update mdept set deptid=3 where rollno=192225013;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select*from mdept;
++--------+----------+-----------+
+| deptid | deptname | rollno    |
++--------+----------+-----------+
+|      1 | CSE      | 192225012 |
+|      3 | ECE      | 192225013 |
++--------+----------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> update mdept set deptname="BME" where rollno=192225015;
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> select*from mdept;
++--------+----------+-----------+
+| deptid | deptname | rollno    |
++--------+----------+-----------+
+|      1 | CSE      | 192225012 |
+|      3 | ECE      | 192225013 |
++--------+----------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> select deptid,deptname,rollno from mdept,mentees where mentees.regno=mdept.rollno;
++--------+----------+-----------+
+| deptid | deptname | rollno    |
++--------+----------+-----------+
+|      1 | CSE      | 192225012 |
+|      3 | ECE      | 192225013 |
++--------+----------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> select name,dept,deptid,deptname,rollno from mdept,mentees where mentees on mdept.rol
+lno=mentees.regno;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'on mdept.rollno=mentees.regno' at line 1
+mysql> select rollno,deptname,name,adress from mdept left over join mentees on mdept.rollno=
+mentees.regno;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'over join mentees on mdept.rollno=mentees.regno' at line 1
+mysql> select rollno,deptname,name,address from mdept left outer join mentees on mdept.rolln
+o=mentees.regno;
++-----------+----------+---------+---------+
+| rollno    | deptname | name    | address |
++-----------+----------+---------+---------+
+| 192225012 | CSE      | lakshmi | guntur  |
+| 192225013 | ECE      | sriya   | nellore |
++-----------+----------+---------+---------+
+2 rows in set (0.00 sec)
+
+mysql> select rollno,deptname,name,address from mdept right outer join mentees on mdept.roll
+no=mentees.regno;
++-----------+----------+----------+---------+
+| rollno    | deptname | name     | address |
++-----------+----------+----------+---------+
+| 192225012 | CSE      | lakshmi  | guntur  |
+| 192225013 | ECE      | sriya    | nellore |
+|      NULL | NULL     | thanusri | madurai |
++-----------+----------+----------+---------+
+3 rows in set (0.00 sec)
+
+mysql> insert into mdept values(4,"ENE",192225012);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into mdept values(5,"COM",192225013);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select rollno,deptname,name,adress from mdept right outer join mentees on mdept.rolln
+o=mentees.regno;
+ERROR 1054 (42S22): Unknown column 'adress' in 'field list'
+mysql> select rollno,deptname,name,address from mdept right outer join mentees on mdept.roll
+no=mentees.regno;
++-----------+----------+----------+---------+
+| rollno    | deptname | name     | address |
++-----------+----------+----------+---------+
+| 192225012 | CSE      | lakshmi  | guntur  |
+| 192225012 | ENE      | lakshmi  | guntur  |
+| 192225013 | ECE      | sriya    | nellore |
+| 192225013 | COM      | sriya    | nellore |
+|      NULL | NULL     | thanusri | madurai |
++-----------+----------+----------+---------+
+5 rows in set (0.00 sec)
+
+mysq

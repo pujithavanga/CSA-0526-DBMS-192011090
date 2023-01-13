@@ -1,0 +1,165 @@
+*****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 35
+Server version: 5.5.62 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use simats;
+Database changed
+mysql> show tables;
++------------------+
+| Tables_in_simats |
++------------------+
+| employee         |
+| marks_view       |
+| mdept            |
+| mentees          |
+| mentees1         |
+| per              |
+| student          |
+| studepartment    |
++------------------+
+8 rows in set (0.00 sec)
+
+mysql> select*from mentees;
++-----------+----------+------+---------+------------+-------+---------+
+| regno     | name     | dept | address | fathername | marks | subject |
++-----------+----------+------+---------+------------+-------+---------+
+| 192225012 | lakshmi  | CSE  | guntur  | krishna    |    99 | BIOEVS  |
+| 192225013 | sriya    | ECE  | nellore | kantha rao |    91 | PDSD    |
+| 192225015 | thanusri | EEE  | madurai | ramesh     |    91 | NULL    |
++-----------+----------+------+---------+------------+-------+---------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT name,marks.CASE WHEN marks>95 THEN 'excellent' WHEN marks 90 THEN 'GOOD' ELSE
+'average' END as perfomance FROM mentees;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHEN marks>95 THEN 'excellent' WHEN marks 90 THEN 'GOOD' ELSE 'average' END as p' at line 1
+mysql> SELECT name,marks, CASE WHEN marks>95 THEN 'excellent' WHEN marks >90 THEN 'GOOD'ELSE 'average' END as perfomance FROM mentees;
++----------+-------+------------+
+| name     | marks | perfomance |
++----------+-------+------------+
+| lakshmi  |    99 | excellent  |
+| sriya    |    91 | GOOD       |
+| thanusri |    91 | GOOD       |
++----------+-------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select name,marks,if(marks>=95,"excellent marks","good marks")from mentees;
++----------+-------+----------------------------------------------+
+| name     | marks | if(marks>=95,"excellent marks","good marks") |
++----------+-------+----------------------------------------------+
+| lakshmi  |    99 | excellent marks                              |
+| sriya    |    91 | good marks                                   |
+| thanusri |    91 | good marks                                   |
++----------+-------+----------------------------------------------+
+3 rows in set (0.00 sec)
+
+mysql> DELIMITER $$
+mysql> CREATE FUNTION REPEATE_DEMO(INC INT)
+    -> RETURNS CHAR(40)
+    -> DETERMINISTIC
+    -> BEGIN
+    -> DECLARE INCOME INT;
+    -> SET INCOME=0;
+    -> REPEAT
+    -> SET INCOME=INCOME+INC;
+    -> UNTIL INCOME>4000
+    -> END REPEAT;
+    -> RETURN"INCOME>4000 DETECTED";
+    -> END;
+    -> $$
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FUNTION REPEATE_DEMO(INC INT)
+RETURNS CHAR(40)
+DETERMINISTIC
+BEGIN
+DECLARE INCOM' at line 1
+mysql> CREATE FUNCTION REPEAT_DEMO(INC INT)
+    -> RETURNS CHAR(40)
+    -> DETERMINISTIC
+    -> BEGIN
+    -> DECLARE INCOME INT;
+    -> SET INCOME=0;
+    -> REPEAT
+    -> SET INCOME=INCOME+INC;
+    -> UNTIL INCOME>4000
+    -> END REPEAT;
+    -> RETURN "INCOME>4000 DETECTED";
+    -> END;
+    -> $$
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SELECT REPEAT_DEMO(3000);$$
++----------------------+
+| REPEAT_DEMO(3000)    |
++----------------------+
+| INCOME>4000 DETECTED |
++----------------------+
+1 row in set (0.01 sec)
+
+mysql> SELECT REPEAT_DEMO(4000);$$
++----------------------+
+| REPEAT_DEMO(4000)    |
++----------------------+
+| INCOME>4000 DETECTED |
++----------------------+
+1 row in set (0.00 sec)
+
+mysql> DELIMITER $$
+mysql> CREATE FUNCTION WHILE_DEMO(VALUE CHAR(1))
+    -> RETURNS CHAR(20)
+    -> DETERMINISTIC
+    -> BEGIN
+    -> DECLARE STR CHAR(100);
+    -> DECLEARE I INT;
+    -> SET STR='';
+    -> SET I=1;
+    -> LABEL:
+    -> WHILE I<=5 DO
+    -> SET STR =CONCAT(STR,VALUE);
+    -> SET I=I+1;
+    -> END WHILE LABEL;
+    -> RETURN STR;
+    -> END;
+    -> $$
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'I INT;
+SET STR='';
+SET I=1;
+LABEL:
+WHILE I<=5 DO
+SET STR =CONCAT(STR,VALUE);
+SET' at line 6
+mysql> DELIMITER $$
+mysql> CREATE FUNCTION WHILE_DEMO(VALUE CHAR(1))
+    -> RETURNS CHAR(20)
+    -> DETERMINISTIC
+    -> BEGIN
+    -> DECLARE STR CHAR(100);
+    -> DECLARE I INT;
+    -> SET STR='';
+    -> SET I=1;
+    -> LABEL:
+    -> WHILE I<=5 DO
+    -> SET STR =CONCAT(STR,VALUE);
+    -> SET I=I+1;
+    -> END WHILE LABEL;
+    -> RETURN STR;
+    -> END;
+    -> $$
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT WHILE_DEMO('A');$$
++-----------------+
+| WHILE_DEMO('A') |
++-----------------+
+| AAAAA           |
++-----------------+
+1 row in set (0.00 sec)
+
+mysql

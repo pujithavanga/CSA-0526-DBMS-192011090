@@ -1,0 +1,106 @@
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use simats;
+Database changed
+mysql> show tables;
++------------------+
+| Tables_in_simats |
++------------------+
+| employee         |
+| mdept            |
+| mentees          |
+| mentees1         |
+| student          |
+| studepartment    |
++------------------+
+6 rows in set (0.00 sec)
+
+mysql> select*from mentees;
++-----------+----------+------+---------+------------+-------+---------+
+| regno     | name     | dept | address | fathername | marks | subject |
++-----------+----------+------+---------+------------+-------+---------+
+| 192225012 | lakshmi  | CSE  | guntur  | krishna    |    99 | BIOEVS  |
+| 192225013 | sriya    | ECE  | nellore | kantha rao |    91 | PDSD    |
+| 192225015 | thanusri | EEE  | madurai | ramesh     |    91 | NULL    |
++-----------+----------+------+---------+------------+-------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select*from marks_view;
+ERROR 1146 (42S02): Table 'simats.marks_view' doesn't exist
+mysql> select*from marks view;
+ERROR 1146 (42S02): Table 'simats.marks' doesn't exist
+mysql> create view marks_view as select subject,marks from mentees;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select*from marks_view;
++---------+-------+
+| subject | marks |
++---------+-------+
+| BIOEVS  |    99 |
+| PDSD    |    91 |
+| NULL    |    91 |
++---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> create index subject on mentees(subject);
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> show index from mentees;
++---------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+| Table   | Non_unique | Key_name | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment |
++---------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+| mentees |          1 | subject  |            1 | subject     | A         |           3 |     NULL | NULL   | YES  | BTREE      |         |               |
++---------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+1 row in set (0.00 sec)
+
+mysql> create table per(pid int NOT FULL AUTO_INCREMENT,name varchar(50),age int(3),PRIMARY
+KRY(pid));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FULL AUTO_INCREMENT,name varchar(50),age int(3),PRIMARY KRY(pid))' at line 1
+mysql> create table per(pid int NOT NULL AUTO_INCREMENT,name varchar(50),age int(3),PRIMARY
+KEY(pid));
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> desc per;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| pid   | int(11)     | NO   | PRI | NULL    | auto_increment |
+| name  | varchar(50) | YES  |     | NULL    |                |
+| age   | int(3)      | YES  |     | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+3 rows in set (0.01 sec)
+
+mysql> alter table per AUTO_INCREMENT=100;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into per(name,age)values("sriya",40);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select*from per;
++-----+-------+------+
+| pid | name  | age  |
++-----+-------+------+
+| 100 | sriya |   40 |
++-----+-------+------+
+1 row in set (0.00 sec)
+
+mysql> insert into per(name,age)values("lakshmi",30);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select*from per;
++-----+---------+------+
+| pid | name    | age  |
++-----+---------+------+
+| 100 | sriya   |   40 |
+| 101 | lakshmi |   30 |
++-----+---------+------+
+2 rows in set (0.00 sec)
+
+mysql>

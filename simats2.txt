@@ -1,0 +1,54 @@
+mysql> use simats;
+Database changed
+mysql> create table mentees(regno int(10),name varchar(20),dept varchar(4),address varchar(10),fathername varchar(10));
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> insert into mentees values(192225012,"lakshmi","CSE","guntur");
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into mentees values(192225012,"lakshmi","CSE","guntur","krishna");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into mentees values(192225013,"sriya","ECE","nellore","kantha rao");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into mentees values(192225014,"harshitha","IT","kadapa","masthan rao");
+ERROR 1406 (22001): Data too long for column 'fathername' at row 1
+mysql> insert into mentees values(192225012,"harshi","IT","hari");
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into mentees values(192225014,"harshi","IT","kadapa","hari");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into mentees values(192225015,"thanusri","EEE","madurai","ramesh");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select*from mentees;
++-----------+----------+------+---------+------------+
+| regno     | name     | dept | address | fathername |
++-----------+----------+------+---------+------------+
+| 192225012 | lakshmi  | CSE  | guntur  | krishna    |
+| 192225013 | sriya    | ECE  | nellore | kantha rao |
+| 192225014 | harshi   | IT   | kadapa  | hari       |
+| 192225015 | thanusri | EEE  | madurai | ramesh     |
++-----------+----------+------+---------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select name from mentees;
++----------+
+| name     |
++----------+
+| lakshmi  |
+| sriya    |
+| harshi   |
+| thanusri |
++----------+
+4 rows in set (0.00 sec)
+
+mysql> select*from mentees where name="lakshmi";
++-----------+---------+------+---------+------------+
+| regno     | name    | dept | address | fathername |
++-----------+---------+------+---------+------------+
+| 192225012 | lakshmi | CSE  | guntur  | krishna    |
++-----------+---------+------+---------+------------+
+1 row in set (0.00 sec)
+
+mysql>

@@ -1,0 +1,90 @@
+Enter password: *****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 41
+Server version: 5.5.62 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use simats;
+Database changed
+mysql> show tables;
++------------------+
+| Tables_in_simats |
++------------------+
+| employee         |
+| marks_view       |
+| mdept            |
+| mentees          |
+| mentees1         |
+| movies           |
+| per              |
+| student          |
+| studepartment    |
++------------------+
+9 rows in set (0.00 sec)
+
+mysql> desc student;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| stdid      | int(10)     | YES  |     | NULL    |       |
+| stdname    | varchar(20) | YES  |     | NULL    |       |
+| stdage     | int(10)     | YES  |     | NULL    |       |
+| stdcountry | varchar(20) | YES  |     | NULL    |       |
+| stdaddress | varchar(20) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> create user sriya;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> grant all on student to sriya;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> show grants for sriya;
++-----------------------------------------------------------+
+| Grants for sriya@%                                        |
++-----------------------------------------------------------+
+| GRANT USAGE ON *.* TO 'sriya'@'%'                         |
+| GRANT ALL PRIVILEGES ON `simats`.`student` TO 'sriya'@'%' |
++-----------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+mysql> revoke all on student from sriya;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> show grants for sriya;
++-----------------------------------+
+| Grants for sriya@%                |
++-----------------------------------+
+| GRANT USAGE ON *.* TO 'sriya'@'%' |
++-----------------------------------+
+1 row in set (0.00 sec)
+mysql> grant select,update on persons to Gowtham;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> show grants for Gowtham;
++----------------------------------------------------------+
+| Grants for Gowtham@%                                     |
++----------------------------------------------------------+
+| GRANT USAGE ON *.* TO `sriya`@`%`                        |
+| GRANT SELECT, UPDATE ON `simats`.`persons` TO `sriya`@`% |
++----------------------------------------------------------+
+2 rows in set (0.00 sec)
+mysql> revoke update on persons from Gowtham;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> show grants for Gowtham;
++--------------------------------------------------+
+| Grants for Gowtham@%                             |
++--------------------------------------------------+
+| GRANT USAGE ON *.* TO `sriya`@`%`                |
+| GRANT SELECT ON `simats``persons` TO `sriya`@`%` |
++--------------------------------------------------+
+2 rows in set (0.00 sec)
